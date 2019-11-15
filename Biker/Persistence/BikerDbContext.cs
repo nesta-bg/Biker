@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Biker.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biker.Persistence
 {
@@ -9,5 +10,6 @@ namespace Biker.Persistence
         {
 
         }
+        public DbSet<Make> Makes { get; set; }
     }
 }
