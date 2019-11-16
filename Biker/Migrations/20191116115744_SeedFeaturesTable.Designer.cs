@@ -3,14 +3,16 @@ using Biker.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Biker.Migrations
 {
     [DbContext(typeof(BikerDbContext))]
-    partial class BikerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191116115744_SeedFeaturesTable")]
+    partial class SeedFeaturesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
