@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Biker.Models
 {
+    [Table("Bikes")]
     public class Bike
     {
         public int Id { get; set; }
@@ -17,9 +20,15 @@ namespace Biker.Models
         public Contact Contact { get; set; }
 
         public DateTime LastUpdate { get; set; }
+
+        public ICollection<BikeFeature> Features { get; set; }
+
+        public Bike()
+        {
+            Features = new Collection<BikeFeature>();
+        }
     }
 
-    [Owned]
     public class Contact
     {
         [Required]
