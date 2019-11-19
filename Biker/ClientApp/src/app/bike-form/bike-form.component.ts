@@ -6,18 +6,21 @@ import { MakeService } from '../services/make.service';
   styleUrls: ['./bike-form.component.css']
 })
 export class BikeFormComponent implements OnInit {
-  makes;
+  makes: any;
+  models: any;
+  bike: any = {};
 
   constructor(private makeService: MakeService) { }
 
   ngOnInit() {
     this.makeService.getMakes()
-      .subscribe(makes => {
-        this.makes = makes
-        console.log("MAKES", this.makes);
-      });
+      .subscribe(makes => 
+        this.makes = makes); 
+  }
 
-    
+  onMakeChange() {
+    var selectedMake = this.makes.find(m => m.id == this.bike.make);
+    this.models = selectedMake ? selectedMake.models : [];
   }
 
 }
