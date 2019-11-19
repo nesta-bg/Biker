@@ -6,6 +6,7 @@ import { AppComponent } from './app/app.component';
 import { NavMenuComponent } from './navmenu/navmenu.component';
 import { HomeComponent } from './home/home.component';
 import { BikeFormComponent } from './bike-form/bike-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { BikeFormComponent } from './bike-form/bike-form.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
