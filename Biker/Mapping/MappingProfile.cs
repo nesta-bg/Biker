@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Biker.Controllers.Resources;
 using Biker.Models;
+//using System.Collections.Generic;
 using System.Linq;
 
 namespace Biker.Mapping
@@ -26,11 +27,25 @@ namespace Biker.Mapping
               .ForMember(b => b.Features, opt => opt.Ignore())
               .AfterMap((br, b) => {
                   // Remove unselected features
+                  //var removedFeatures = new List<BikeFeature>();
+                  //foreach (var f in b.Features)
+                  //    if (!br.Features.Contains(f.FeatureId))
+                  //        removedFeatures.Add(f);
+
+                  //foreach (var f in removedFeatures)
+                  //    b.Features.Remove(f);
+
+                  //LINQ
                   var removedFeatures = b.Features.Where(f => !br.Features.Contains(f.FeatureId));
                   foreach (var f in removedFeatures)
                       b.Features.Remove(f);
 
                   // Add new features
+                  //foreach (var id in br.Features)
+                  //    if (!b.Features.Any(f => f.FeatureId == id))
+                  //        b.Features.Add(new BikeFeature { FeatureId = id });
+
+                  //LINQ
                   var addedFeatures = br.Features.Where(id => !b.Features.Any(f => f.FeatureId == id)).Select(id => new BikeFeature { FeatureId = id });
                   foreach (var f in addedFeatures)
                       b.Features.Add(f);
