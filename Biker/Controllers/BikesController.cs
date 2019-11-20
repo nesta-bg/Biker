@@ -52,6 +52,10 @@ namespace Biker.Controllers
                 return BadRequest(ModelState);
 
             var bike = await context.Bikes.Include(b => b.Features).SingleOrDefaultAsync(b => b.Id == id);
+
+            if (bike == null)
+                return NotFound();
+
             mapper.Map<BikeResource, Bike>(bikeResource, bike);
             bike.LastUpdate = DateTime.Now;
 
@@ -60,6 +64,20 @@ namespace Biker.Controllers
             var result = mapper.Map<Bike, BikeResource>(bike);
 
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBike(int id)
+        {
+            var bike = await context.Bikes.FindAsync(id);
+
+            if (bike == null)
+                return NotFound();
+
+            context.Remove(bike);
+            await context.SaveChangesAsync();
+
+            return Ok(id);
         }
     }
 }
