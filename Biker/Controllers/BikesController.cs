@@ -79,5 +79,18 @@ namespace Biker.Controllers
 
             return Ok(id);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBike(int id)
+        {
+            var bike = await context.Bikes.Include(b => b.Features).SingleOrDefaultAsync(b => b.Id == id);
+
+            if (bike == null)
+                return NotFound();
+
+            var bikeResource = mapper.Map<Bike, BikeResource>(bike);
+
+            return Ok(bikeResource);
+        }
     }
 }
