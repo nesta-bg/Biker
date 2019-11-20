@@ -3,6 +3,7 @@ using Biker.Controllers.Resources;
 using Biker.Models;
 using Biker.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -37,6 +38,23 @@ namespace Biker.Controllers
             bike.LastUpdate = DateTime.Now;
 
             context.Bikes.Add(bike);
+            await context.SaveChangesAsync();
+
+            var result = mapper.Map<Bike, BikeResource>(bike);
+
+            return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateBike(int id, [FromBody] BikeResource bikeResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var bike = await context.Bikes.Include(b => b.Features).SingleOrDefaultAsync(b => b.Id == id);
+            mapper.Map<BikeResource, Bike>(bikeResource, bike);
+            bike.LastUpdate = DateTime.Now;
+
             await context.SaveChangesAsync();
 
             var result = mapper.Map<Bike, BikeResource>(bike);

@@ -19,10 +19,22 @@ namespace Biker.Mapping
 
             // From API Resource to Domain
             CreateMap<BikeResource, Bike>()
+              .ForMember(b => b.Id, opt => opt.Ignore())
               .ForPath(b => b.Contact.Name, opt => opt.MapFrom(br => br.Contact.Name))
               .ForPath(b => b.Contact.Email, opt => opt.MapFrom(br => br.Contact.Email))
               .ForPath(b => b.Contact.Phone, opt => opt.MapFrom(br => br.Contact.Phone))
-              .ForMember(b => b.Features, opt => opt.MapFrom(br => br.Features.Select(id => new BikeFeature { FeatureId = id })));
+              .ForMember(b => b.Features, opt => opt.Ignore())
+              .AfterMap((br, b) => {
+                  // Remove unselected features
+                  var removedFeatures = b.Features.Where(f => !br.Features.Contains(f.FeatureId));
+                  foreach (var f in removedFeatures)
+                      b.Features.Remove(f);
+
+                  // Add new features
+                  var addedFeatures = br.Features.Where(id => !b.Features.Any(f => f.FeatureId == id)).Select(id => new BikeFeature { FeatureId = id });
+                  foreach (var f in addedFeatures)
+                      b.Features.Add(f);
+              });
         }
     }
 }
