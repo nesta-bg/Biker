@@ -23,6 +23,16 @@ namespace Biker.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBike([FromBody] BikeResource bikeResource)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            //var model = await context.Models.FindAsync(bikeResource.ModelId);
+            //if (model == null)
+            //{
+            //    ModelState.AddModelError("ModelId", "Invalid modelId.");
+            //    return BadRequest(ModelState);
+            //}
+
             var bike = mapper.Map<BikeResource, Bike>(bikeResource);
             bike.LastUpdate = DateTime.Now;
 
