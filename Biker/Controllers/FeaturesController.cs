@@ -21,11 +21,11 @@ namespace Biker.Controllers
         }
 
         [HttpGet("/api/features")]
-        public async Task<IEnumerable<FeatureResource>> GetFeatures()
+        public async Task<IEnumerable<KeyValuePairResource>> GetFeatures()
         {
             var features = await context.Features.ToListAsync();
 
-            return mapper.Map<List<Feature>, IEnumerable<FeatureResource>>(features);
+            return mapper.Map<List<Feature>, IEnumerable<KeyValuePairResource>>(features);
         }
     }
 }

@@ -9,9 +9,9 @@ namespace Biker.Controllers.Resources
 
         public int Id { get; set; }
 
-        public ModelResource Model { get; set; }
+        public KeyValuePairResource Model { get; set; }
 
-        public MakeResource Make { get; set; }
+        public KeyValuePairResource Make { get; set; }
 
         public bool IsRegistered { get; set; }
 
@@ -19,11 +19,11 @@ namespace Biker.Controllers.Resources
 
         public DateTime LastUpdate { get; set; }
 
-        public ICollection<FeatureResource> Features { get; set; }
+        public ICollection<KeyValuePairResource> Features { get; set; }
 
         public BikeResource()
         {
-            Features = new Collection<FeatureResource>();
+            Features = new Collection<KeyValuePairResource>();
         }
 
     }

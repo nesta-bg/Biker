@@ -12,15 +12,16 @@ namespace Biker.Mapping
         {
             // From Domain to API Resource
             CreateMap<Make, MakeResource>();
-            CreateMap<Model, ModelResource>();
-            CreateMap<Feature, FeatureResource>();
+            CreateMap<Make, KeyValuePairResource>();
+            CreateMap<Model, KeyValuePairResource>();
+            CreateMap<Feature, KeyValuePairResource>();
             CreateMap<Bike, SaveBikeResource>()
              .ForMember(br => br.Contact, opt => opt.MapFrom(b => new ContactResource { Name = b.Contact.Name, Email = b.Contact.Email, Phone = b.Contact.Phone }))
              .ForMember(br => br.Features, opt => opt.MapFrom(b => b.Features.Select(bf => bf.FeatureId)));
             CreateMap<Bike, BikeResource>()
               .ForMember(br => br.Make, opt => opt.MapFrom(b => b.Model.Make))
               .ForMember(br => br.Contact, opt => opt.MapFrom(b => new ContactResource { Name = b.Contact.Name, Email = b.Contact.Email, Phone = b.Contact.Phone }))
-              .ForMember(br => br.Features, opt => opt.MapFrom(b => b.Features.Select(bf => new FeatureResource { Id = bf.Feature.Id, Name = bf.Feature.Name })));
+              .ForMember(br => br.Features, opt => opt.MapFrom(b => b.Features.Select(bf => new KeyValuePairResource { Id = bf.Feature.Id, Name = bf.Feature.Name })));
 
             // From API Resource to Domain
             CreateMap<SaveBikeResource, Bike>()
