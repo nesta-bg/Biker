@@ -22,31 +22,24 @@ namespace Biker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBike([FromBody] BikeResource bikeResource)
+        public async Task<IActionResult> CreateBike([FromBody] SaveBikeResource bikeResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            //var model = await context.Models.FindAsync(bikeResource.ModelId);
-            //if (model == null)
-            //{
-            //    ModelState.AddModelError("ModelId", "Invalid modelId.");
-            //    return BadRequest(ModelState);
-            //}
-
-            var bike = mapper.Map<BikeResource, Bike>(bikeResource);
+            var bike = mapper.Map<SaveBikeResource, Bike>(bikeResource);
             bike.LastUpdate = DateTime.Now;
 
             context.Bikes.Add(bike);
             await context.SaveChangesAsync();
 
-            var result = mapper.Map<Bike, BikeResource>(bike);
+            var result = mapper.Map<Bike, SaveBikeResource>(bike);
 
             return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBike(int id, [FromBody] BikeResource bikeResource)
+        public async Task<IActionResult> UpdateBike(int id, [FromBody] SaveBikeResource bikeResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -56,12 +49,12 @@ namespace Biker.Controllers
             if (bike == null)
                 return NotFound();
 
-            mapper.Map<BikeResource, Bike>(bikeResource, bike);
+            mapper.Map<SaveBikeResource, Bike>(bikeResource, bike);
             bike.LastUpdate = DateTime.Now;
 
             await context.SaveChangesAsync();
 
-            var result = mapper.Map<Bike, BikeResource>(bike);
+            var result = mapper.Map<Bike, SaveBikeResource>(bike);
 
             return Ok(result);
         }
@@ -83,7 +76,12 @@ namespace Biker.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBike(int id)
         {
-            var bike = await context.Bikes.Include(b => b.Features).SingleOrDefaultAsync(b => b.Id == id);
+            var bike = await context.Bikes
+                .Include(b => b.Features)
+                    .ThenInclude(bf => bf.Feature)
+                .Include(b => b.Model)
+                    .ThenInclude(m => m.Make)
+                .SingleOrDefaultAsync(b => b.Id == id);
 
             if (bike == null)
                 return NotFound();
