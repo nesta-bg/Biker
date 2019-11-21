@@ -3,7 +3,6 @@ using Biker.Controllers.Resources;
 using Biker.Models;
 using Biker.Persistence;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -14,11 +13,13 @@ namespace Biker.Controllers
     {
         private readonly BikerDbContext context;
         private readonly IMapper mapper;
+        private readonly IBikeRepository repository;
 
-        public BikesController(BikerDbContext context, IMapper mapper)
+        public BikesController(BikerDbContext context, IMapper mapper, IBikeRepository repository)
         {
             this.context = context;
             this.mapper = mapper;
+            this.repository = repository;
         }
 
         [HttpPost]
@@ -33,12 +34,7 @@ namespace Biker.Controllers
             context.Bikes.Add(bike);
             await context.SaveChangesAsync();
 
-            bike = await context.Bikes
-                .Include(b => b.Features)
-                    .ThenInclude(bf => bf.Feature)
-                .Include(b => b.Model)
-                    .ThenInclude(m => m.Make)
-                .SingleOrDefaultAsync(b => b.Id == bike.Id);
+            bike = await repository.GetBike(bike.Id);
 
             var result = mapper.Map<Bike, BikeResource>(bike);
 
@@ -51,12 +47,7 @@ namespace Biker.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var bike = await context.Bikes
-                .Include(b => b.Features)
-                    .ThenInclude(bf => bf.Feature)
-                .Include(b => b.Model)
-                    .ThenInclude(m => m.Make)
-                .SingleOrDefaultAsync(b => b.Id == id);
+            var bike = await repository.GetBike(id);
 
             if (bike == null)
                 return NotFound();
@@ -88,12 +79,7 @@ namespace Biker.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBike(int id)
         {
-            var bike = await context.Bikes
-                .Include(b => b.Features)
-                    .ThenInclude(bf => bf.Feature)
-                .Include(b => b.Model)
-                    .ThenInclude(m => m.Make)
-                .SingleOrDefaultAsync(b => b.Id == id);
+            var bike = await repository.GetBike(id);
 
             if (bike == null)
                 return NotFound();
