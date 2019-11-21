@@ -31,7 +31,7 @@ namespace Biker.Controllers
             var bike = mapper.Map<SaveBikeResource, Bike>(bikeResource);
             bike.LastUpdate = DateTime.Now;
 
-            context.Bikes.Add(bike);
+            repository.Add(bike);
             await context.SaveChangesAsync();
 
             bike = await repository.GetBike(bike.Id);
@@ -65,12 +65,12 @@ namespace Biker.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBike(int id)
         {
-            var bike = await context.Bikes.FindAsync(id);
+            var bike = await repository.GetBike(id, includeRelated: false);
 
             if (bike == null)
                 return NotFound();
 
-            context.Remove(bike);
+            repository.Remove(bike);
             await context.SaveChangesAsync();
 
             return Ok(id);

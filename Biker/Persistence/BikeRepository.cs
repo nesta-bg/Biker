@@ -13,14 +13,31 @@ namespace Biker.Persistence
             this.context = context;
         }
 
-        public async Task<Bike> GetBike(int id)
+        public async Task<Bike> GetBike(int id, bool includeRelated = true)
         {
+            if (!includeRelated)
+                return await context.Bikes.FindAsync(id);
+
             return await context.Bikes
                .Include(b => b.Features)
                    .ThenInclude(bf => bf.Feature)
                .Include(b => b.Model)
                    .ThenInclude(m => m.Make)
                .SingleOrDefaultAsync(b => b.Id == id);
+        }
+
+        //public async Task<Bike> GetBikeWithMake(int id)
+        //{
+        //}
+
+        public void Add(Bike bike)
+        {
+            context.Bikes.Add(bike);
+        }
+
+        public void Remove(Bike bike)
+        {
+            context.Remove(bike);
         }
     }
 }
