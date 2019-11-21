@@ -33,7 +33,14 @@ namespace Biker.Controllers
             context.Bikes.Add(bike);
             await context.SaveChangesAsync();
 
-            var result = mapper.Map<Bike, SaveBikeResource>(bike);
+            bike = await context.Bikes
+                .Include(b => b.Features)
+                    .ThenInclude(bf => bf.Feature)
+                .Include(b => b.Model)
+                    .ThenInclude(m => m.Make)
+                .SingleOrDefaultAsync(b => b.Id == bike.Id);
+
+            var result = mapper.Map<Bike, BikeResource>(bike);
 
             return Ok(result);
         }
@@ -44,7 +51,12 @@ namespace Biker.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var bike = await context.Bikes.Include(b => b.Features).SingleOrDefaultAsync(b => b.Id == id);
+            var bike = await context.Bikes
+                .Include(b => b.Features)
+                    .ThenInclude(bf => bf.Feature)
+                .Include(b => b.Model)
+                    .ThenInclude(m => m.Make)
+                .SingleOrDefaultAsync(b => b.Id == id);
 
             if (bike == null)
                 return NotFound();
@@ -54,7 +66,7 @@ namespace Biker.Controllers
 
             await context.SaveChangesAsync();
 
-            var result = mapper.Map<Bike, SaveBikeResource>(bike);
+            var result = mapper.Map<Bike, BikeResource>(bike);
 
             return Ok(result);
         }
