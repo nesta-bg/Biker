@@ -30,6 +30,8 @@ namespace Biker
         {
             services.AddScoped<IBikeRepository, BikeRepository>();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<BikerDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));

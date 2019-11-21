@@ -11,15 +11,18 @@ namespace Biker.Controllers
     [Route("/api/bikes")]
     public class BikesController : Controller
     {
-        private readonly BikerDbContext context;
         private readonly IMapper mapper;
         private readonly IBikeRepository repository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public BikesController(BikerDbContext context, IMapper mapper, IBikeRepository repository)
+        public BikesController(
+            IMapper mapper, 
+            IBikeRepository repository,
+            IUnitOfWork unitOfWork)
         {
-            this.context = context;
             this.mapper = mapper;
             this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpPost]
@@ -32,7 +35,7 @@ namespace Biker.Controllers
             bike.LastUpdate = DateTime.Now;
 
             repository.Add(bike);
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             bike = await repository.GetBike(bike.Id);
 
@@ -55,7 +58,7 @@ namespace Biker.Controllers
             mapper.Map<SaveBikeResource, Bike>(bikeResource, bike);
             bike.LastUpdate = DateTime.Now;
 
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             var result = mapper.Map<Bike, BikeResource>(bike);
 
@@ -71,7 +74,7 @@ namespace Biker.Controllers
                 return NotFound();
 
             repository.Remove(bike);
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             return Ok(id);
         }
