@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Biker.Core;
+using System.Threading.Tasks;
 
 namespace Biker.Persistence
 {

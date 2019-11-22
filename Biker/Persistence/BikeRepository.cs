@@ -1,4 +1,5 @@
-﻿using Biker.Models;
+﻿using Biker.Core;
+using Biker.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 

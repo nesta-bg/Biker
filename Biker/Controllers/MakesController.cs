@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Biker.Controllers.Resources;
-using Biker.Models;
+using Biker.Core.Models;
 using Biker.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

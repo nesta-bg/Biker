@@ -1,4 +1,4 @@
-﻿using Biker.Models;
+﻿using Biker.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Biker.Persistence
