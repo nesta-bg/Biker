@@ -40,4 +40,9 @@ export class BikeFormComponent implements OnInit {
       this.bike.features.splice(index, 1);
     }
   }
+
+  submit() {
+    this.bikeService.create(this.bike)
+      .subscribe(x => console.log(x));
+  }
 }

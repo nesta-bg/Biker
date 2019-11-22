@@ -18,6 +18,10 @@ export class BikeService {
   getFeatures() {
     return this._httpClient.get(this.myAppUrl + "api/features");
   }
+
+  create(bike) {
+    return this._httpClient.post(this.myAppUrl + "api/bikes", bike);
+  }
 }
 
 
