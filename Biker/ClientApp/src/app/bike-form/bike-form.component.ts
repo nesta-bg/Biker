@@ -9,7 +9,9 @@ export class BikeFormComponent implements OnInit {
   makes: any;
   models: any;
   features: any;
-  bike: any = {};
+  bike: any = {
+    features: []
+  };
 
   constructor(private bikeService: BikeService) { }
 
@@ -29,4 +31,12 @@ export class BikeFormComponent implements OnInit {
     delete this.bike.modelId;
   }
 
+  onFeatureToggle(featureId, $event) {
+    if ($event.target.checked)
+      this.bike.features.push(featureId);
+    else {
+      var index = this.bike.features.indexOf(featureId);
+      this.bike.features.splice(index, 1);
+    }
+  }
 }
