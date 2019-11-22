@@ -60,6 +60,7 @@ namespace Biker.Controllers
 
             await unitOfWork.CompleteAsync();
 
+            bike = await repository.GetBike(bike.Id);
             var result = mapper.Map<Bike, BikeResource>(bike);
 
             return Ok(result);

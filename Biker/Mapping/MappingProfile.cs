@@ -41,7 +41,7 @@ namespace Biker.Mapping
                   //    b.Features.Remove(f);
 
                   //LINQ
-                  var removedFeatures = b.Features.Where(f => !br.Features.Contains(f.FeatureId));
+                  var removedFeatures = b.Features.Where(f => !br.Features.Contains(f.FeatureId)).ToList();
                   foreach (var f in removedFeatures)
                       b.Features.Remove(f);
 
@@ -51,7 +51,7 @@ namespace Biker.Mapping
                   //        b.Features.Add(new BikeFeature { FeatureId = id });
 
                   //LINQ
-                  var addedFeatures = br.Features.Where(id => !b.Features.Any(f => f.FeatureId == id)).Select(id => new BikeFeature { FeatureId = id });
+                  var addedFeatures = br.Features.Where(id => !b.Features.Any(f => f.FeatureId == id)).Select(id => new BikeFeature { FeatureId = id }).ToList();
                   foreach (var f in addedFeatures)
                       b.Features.Add(f);
               });
