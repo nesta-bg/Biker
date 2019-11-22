@@ -24,8 +24,9 @@ export class BikeFormComponent implements OnInit {
   }
 
   onMakeChange() {
-    var selectedMake = this.makes.find(m => m.id == this.bike.make);
+    var selectedMake = this.makes.find(m => m.id == this.bike.makeId);
     this.models = selectedMake ? selectedMake.models : [];
+    delete this.bike.modelId;
   }
 
 }
