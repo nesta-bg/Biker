@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Biker.Controllers.Resources;
-using Biker.Models;
-using Biker.Persistence;
+using Biker.Core;
+using Biker.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;

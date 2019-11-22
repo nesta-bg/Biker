@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Biker.Models
+namespace Biker.Core.Models
 {
     [Table("Bikes")]
     public class Bike

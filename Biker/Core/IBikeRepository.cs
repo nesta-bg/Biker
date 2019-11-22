@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Biker.Models;
+using Biker.Core.Models;
 
-namespace Biker.Persistence
+namespace Biker.Core
 {
     public interface IBikeRepository
     {

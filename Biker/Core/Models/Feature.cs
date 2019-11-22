@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Biker.Models
+namespace Biker.Core.Models
 {
     public class Feature
     {

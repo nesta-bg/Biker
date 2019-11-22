@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Biker.Models
+namespace Biker.Core.Models
 {
     [Table("BikeFeatures")]
     public class BikeFeature

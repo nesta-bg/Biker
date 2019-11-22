@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Biker.Persistence
+namespace Biker.Core
 {
     public interface IUnitOfWork
     {
