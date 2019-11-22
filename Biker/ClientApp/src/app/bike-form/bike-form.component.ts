@@ -10,7 +10,8 @@ export class BikeFormComponent implements OnInit {
   models: any;
   features: any;
   bike: any = {
-    features: []
+    features: [],
+    contact: {}
   };
 
   constructor(private bikeService: BikeService) { }
