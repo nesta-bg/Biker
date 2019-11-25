@@ -12,6 +12,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppErrorHandler } from './app.error-handler';
 
+import * as Sentry from "@sentry/browser";
+
+Sentry.init({
+  dsn: "https://9186aac887414930a5469ccd467b1217@sentry.io/1833261"
+});
+
 @NgModule({
   declarations: [
     AppComponent,

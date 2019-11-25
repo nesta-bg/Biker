@@ -1,5 +1,6 @@
-import { ErrorHandler, Inject, NgZone } from '@angular/core';
+import { ErrorHandler, Inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import * as Sentry from "@sentry/browser";
 
 export class AppErrorHandler implements ErrorHandler {
 
@@ -7,6 +8,8 @@ export class AppErrorHandler implements ErrorHandler {
   }
 
   handleError(error: any): void {
+    Sentry.captureException(error.originalError || error);
+
     this.toastr.error('An unexpected error happened.', 'Error', {
       timeOut: 2000,
       closeButton: true,
