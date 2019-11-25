@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BikeService } from '../services/bike.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   templateUrl: './bike-form.component.html',
@@ -15,7 +14,7 @@ export class BikeFormComponent implements OnInit {
     contact: {}
   };
 
-  constructor(private bikeService: BikeService, private toastr: ToastrService) { }
+  constructor(private bikeService: BikeService) { }
 
   ngOnInit() {
     this.bikeService.getMakes()
@@ -44,20 +43,6 @@ export class BikeFormComponent implements OnInit {
 
   submit() {
     this.bikeService.create(this.bike)
-      .subscribe(
-        x => console.log(x),
-        err => {
-          //server-side validation
-          //if (err.status == 400) {
-          //}
-
-          this.toastr.error('An unexpected error happened.', 'Error', {
-            timeOut: 2000,
-            closeButton: true,
-            progressBar: true,
-            progressAnimation: 'increasing'
-          });
-        }
-      );
+      .subscribe(x => console.log(x));
   }
 }
