@@ -51,8 +51,10 @@ export class BikeFormComponent implements OnInit {
       .subscribe(data => {
         this.makes = data[0];
         this.features = data[1];
-        if (this.bike.id)
+        if (this.bike.id) {
           this.setBike(data[2] as Bike);
+          this.populateModels();
+        }
       }, err => {
         if (err.status == 404)
           this.router.navigate(['/home']);
@@ -69,9 +71,13 @@ export class BikeFormComponent implements OnInit {
   }
 
   onMakeChange() {
+    this.populateModels();
+    delete this.bike.modelId;
+  }
+
+  private populateModels() {
     var selectedMake = this.makes.find(m => m.id == this.bike.makeId);
     this.models = selectedMake ? selectedMake.models : [];
-    delete this.bike.modelId;
   }
 
   onFeatureToggle(featureId, $event) {
