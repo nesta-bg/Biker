@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BikeService } from '../services/bike.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   templateUrl: './bike-form.component.html',
@@ -14,9 +15,28 @@ export class BikeFormComponent implements OnInit {
     contact: {}
   };
 
-  constructor(private bikeService: BikeService) { }
+  constructor(
+    private bikeService: BikeService,
+    private route: ActivatedRoute,
+    private router: Router) {
+
+    this.route.params
+      .subscribe(p => {
+        // + convert to number
+        this.bike.id = +p['id'];
+      });
+  }
 
   ngOnInit() {
+    this.bikeService.getBike(this.bike.id)
+      .subscribe(b => {
+        this.bike = b;
+      //server-side prerendering
+      }, err => {
+        if (err.status == 404)
+          this.router.navigate(['/home']);
+      });
+
     this.bikeService.getMakes()
       .subscribe(makes =>
         this.makes = makes);

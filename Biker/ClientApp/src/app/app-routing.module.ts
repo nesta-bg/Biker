@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'bikes/new', component: BikeFormComponent },
+  { path: 'bikes/:id', component: BikeFormComponent },
   { path: '**', redirectTo: 'home' }
 ];
 

@@ -22,6 +22,10 @@ export class BikeService {
   create(bike) {
     return this._httpClient.post(this.myAppUrl + "api/bikes", bike);
   }
+
+  getBike(id) {
+    return this._httpClient.get(this.myAppUrl + "api/bikes/" + id)
+  }
 }
 
 

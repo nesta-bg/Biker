@@ -28,8 +28,6 @@ namespace Biker.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBike([FromBody] SaveBikeResource bikeResource)
         {
-            throw new Exception();
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
