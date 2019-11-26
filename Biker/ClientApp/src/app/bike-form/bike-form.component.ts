@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BikeService } from '../services/bike.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { SaveBike, Bike } from '../models/bike';
+import * as _ from "underscore";
 
 @Component({
   templateUrl: './bike-form.component.html',
@@ -11,9 +13,17 @@ export class BikeFormComponent implements OnInit {
   makes: any;
   models: any;
   features: any;
-  bike: any = {
+  bike: SaveBike = {
+    id: 0,
+    makeId: 0,
+    modelId: 0,
+    isRegistered: false,
     features: [],
-    contact: {}
+    contact: {
+      name: '',
+      email: '',
+      phone: '',
+    }
   };
 
   constructor(
@@ -42,11 +52,20 @@ export class BikeFormComponent implements OnInit {
         this.makes = data[0];
         this.features = data[1];
         if (this.bike.id)
-          this.bike = data[2];
+          this.setBike(data[2] as Bike);
       }, err => {
-        if (err.status == 404) 
+        if (err.status == 404)
           this.router.navigate(['/home']);
       });
+  }
+
+  private setBike(b: Bike) {
+    this.bike.id = b.id;
+    this.bike.makeId = b.make.id;
+    this.bike.modelId = b.model.id;
+    this.bike.isRegistered = b.isRegistered;
+    this.bike.contact = b.contact;
+    this.bike.features = _.pluck(b.features, 'id');
   }
 
   onMakeChange() {
