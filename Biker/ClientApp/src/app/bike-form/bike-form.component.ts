@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { SaveBike, Bike } from '../models/bike';
 import * as _ from "underscore";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   templateUrl: './bike-form.component.html',
@@ -29,7 +30,8 @@ export class BikeFormComponent implements OnInit {
   constructor(
     private bikeService: BikeService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private toastr: ToastrService) {
 
     this.route.params
       .subscribe(p => {
@@ -90,7 +92,19 @@ export class BikeFormComponent implements OnInit {
   }
 
   submit() {
-    this.bikeService.create(this.bike)
-      .subscribe(x => console.log(x));
+    if (this.bike.id) {
+      this.bikeService.update(this.bike)
+        .subscribe(x => {
+          this.toastr.success('The bike was sucessfully updated.', 'Success', {
+            timeOut: 2000,
+            closeButton: true,
+            progressBar: true,
+            progressAnimation: 'increasing'
+          });
+        });
+    } else {
+      this.bikeService.create(this.bike)
+        .subscribe(x => console.log(x));
+    }
   }
 }
