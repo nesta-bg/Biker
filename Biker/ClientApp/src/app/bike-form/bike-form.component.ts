@@ -107,4 +107,13 @@ export class BikeFormComponent implements OnInit {
         .subscribe(x => console.log(x));
     }
   }
+
+  delete() {
+    if (confirm("Are you sure?")) {
+      this.bikeService.delete(this.bike.id)
+        .subscribe(x => {
+          this.router.navigate(['home']);
+        });
+    }
+  }
 }

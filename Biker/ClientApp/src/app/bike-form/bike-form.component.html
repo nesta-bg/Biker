@@ -45,5 +45,6 @@
     <label for="contactEmail">Email</label>
     <input id="contactEmail" type="text" class="form-control" [(ngModel)]="bike.contact.email" name="contactEmail">
   </div>
-  <button class="btn btn-primary" [disabled]="!f.valid">Save</button>
+  <button class="btn btn-primary mr-2" [disabled]="!f.valid">Save</button>
+  <button *ngIf="bike.id" class="btn btn-danger" type="button" (click)="delete()">Delete</button>
 </form>

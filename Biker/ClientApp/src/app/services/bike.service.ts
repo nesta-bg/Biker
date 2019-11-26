@@ -25,11 +25,15 @@ export class BikeService {
   }
 
   getBike(id) {
-    return this._httpClient.get(this.myAppUrl + "api/bikes/" + id)
+    return this._httpClient.get(this.myAppUrl + "api/bikes/" + id);
   }
 
   update(bike: SaveBike) {
-    return this._httpClient.put(this.myAppUrl + "api/bikes/" + bike.id, bike)
+    return this._httpClient.put(this.myAppUrl + "api/bikes/" + bike.id, bike);
+  }
+
+  delete(id) {
+    return this._httpClient.delete(this.myAppUrl + "api/bikes/" + id);
   }
 }
 
