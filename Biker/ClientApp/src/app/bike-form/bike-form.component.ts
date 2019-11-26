@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BikeService } from '../services/bike.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   templateUrl: './bike-form.component.html',
@@ -28,22 +29,24 @@ export class BikeFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.bikeService.getBike(this.bike.id)
-      .subscribe(b => {
-        this.bike = b;
-      //server-side prerendering
+    var sources = [
+      this.bikeService.getMakes(),
+      this.bikeService.getFeatures()
+    ];
+
+    if (this.bike.id)
+      sources.push(this.bikeService.getBike(this.bike.id));
+
+    forkJoin(sources)
+      .subscribe(data => {
+        this.makes = data[0];
+        this.features = data[1];
+        if (this.bike.id)
+          this.bike = data[2];
       }, err => {
-        if (err.status == 404)
+        if (err.status == 404) 
           this.router.navigate(['/home']);
       });
-
-    this.bikeService.getMakes()
-      .subscribe(makes =>
-        this.makes = makes);
-
-    this.bikeService.getFeatures()
-      .subscribe(features =>
-        this.features = features);
   }
 
   onMakeChange() {
