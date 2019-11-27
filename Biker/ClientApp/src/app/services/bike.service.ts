@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SaveBike, Bike } from '../models/bike';
+import { SaveBike, Bike, KeyValuePair } from '../models/bike';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class BikeService {
   }
 
   getMakes() {
-    return this._httpClient.get(this.myAppUrl + "api/makes");
+    return this._httpClient.get<KeyValuePair[]>(this.myAppUrl + "api/makes");
   }
 
   getFeatures() {
