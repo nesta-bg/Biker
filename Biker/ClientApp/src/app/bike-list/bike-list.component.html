@@ -1,0 +1,26 @@
+<h2>Bikes</h2>
+<p>
+  <a routerLink='/bikes/new' class="btn btn-primary">New Bike</a>
+</p>
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Make</th>
+      <th>Model</th>
+      <th>Contact Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let b of bikes">
+      <td>{{ b.id }}</td>
+      <td>{{ b.make.name }}</td>
+      <td>{{ b.model.name }}</td>
+      <td>{{ b.contact.name }}</td>
+      <td>
+        <a [routerLink]="['/bikes/', b.id]">View</a>
+      </td>
+    </tr>
+  </tbody>
+</table> 

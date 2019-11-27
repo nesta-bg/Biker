@@ -4,6 +4,7 @@ using Biker.Core;
 using Biker.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Biker.Controllers
@@ -91,6 +92,14 @@ namespace Biker.Controllers
             var bikeResource = mapper.Map<Bike, BikeResource>(bike);
 
             return Ok(bikeResource);
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<BikeResource>> GetBikes()
+        {
+            var bikes = await repository.GetBikes();
+
+            return mapper.Map<IEnumerable<Bike>, IEnumerable<BikeResource>>(bikes);
         }
     }
 }

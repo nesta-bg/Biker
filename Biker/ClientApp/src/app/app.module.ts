@@ -11,6 +11,7 @@ import { BikeFormComponent } from './bike-form/bike-form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppErrorHandler } from './app.error-handler';
+import { BikeListComponent } from './bike-list/bike-list.component';
 
 import * as Sentry from "@sentry/browser";
 
@@ -23,7 +24,8 @@ Sentry.init({
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    BikeFormComponent
+    BikeFormComponent,
+    BikeListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SaveBike } from '../models/bike';
+import { SaveBike, Bike } from '../models/bike';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BikeService {
-  myAppUrl: string;
-
+  private readonly myAppUrl: string;
+  private readonly bikesEndpoint: string; 
+  
   constructor(private _httpClient: HttpClient) {
-    this.myAppUrl = "https://localhost:44386/";
+    this.myAppUrl = environment.appUrl;
+    this.bikesEndpoint = "api/bikes";
   }
 
   getMakes() {
@@ -21,19 +24,23 @@ export class BikeService {
   }
 
   create(bike) {
-    return this._httpClient.post(this.myAppUrl + "api/bikes", bike);
+    return this._httpClient.post(this.myAppUrl + this.bikesEndpoint, bike);
   }
 
   getBike(id) {
-    return this._httpClient.get(this.myAppUrl + "api/bikes/" + id);
+    return this._httpClient.get(this.myAppUrl + this.bikesEndpoint + '/' + id);
+  }
+
+  getBikes() {
+    return this._httpClient.get<Bike[]>(this.myAppUrl + this.bikesEndpoint);
   }
 
   update(bike: SaveBike) {
-    return this._httpClient.put(this.myAppUrl + "api/bikes/" + bike.id, bike);
+    return this._httpClient.put(this.myAppUrl + this.bikesEndpoint + '/' + bike.id, bike);
   }
 
   delete(id) {
-    return this._httpClient.delete(this.myAppUrl + "api/bikes/" + id);
+    return this._httpClient.delete(this.myAppUrl + this.bikesEndpoint + '/' + id);
   }
 }
 

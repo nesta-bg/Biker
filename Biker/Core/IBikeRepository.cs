@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Biker.Core.Models;
 
 namespace Biker.Core
@@ -10,5 +11,7 @@ namespace Biker.Core
         void Add(Bike bike);
 
         void Remove(Bike bike);
+
+        Task<IEnumerable<Bike>> GetBikes();
     }
 }
