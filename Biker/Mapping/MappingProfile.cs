@@ -24,7 +24,7 @@ namespace Biker.Mapping
               .ForMember(br => br.Features, opt => opt.MapFrom(b => b.Features.Select(bf => new KeyValuePairResource { Id = bf.Feature.Id, Name = bf.Feature.Name })));
 
             // From API Resource to Domain
-            CreateMap<FilterResource, Filter>();
+            CreateMap<BikeQueryResource, BikeQuery>();
             CreateMap<SaveBikeResource, Bike>()
               .ForMember(b => b.Id, opt => opt.Ignore())
               .ForPath(b => b.Contact.Name, opt => opt.MapFrom(br => br.Contact.Name))

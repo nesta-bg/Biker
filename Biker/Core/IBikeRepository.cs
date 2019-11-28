@@ -12,6 +12,6 @@ namespace Biker.Core
 
         void Remove(Bike bike);
 
-        Task<IEnumerable<Bike>> GetBikes(Filter filter);
+        Task<IEnumerable<Bike>> GetBikes(BikeQuery queryObj);
     }
 }

@@ -43,7 +43,7 @@ namespace Biker.Persistence
             context.Remove(bike);
         }
 
-        public async Task<IEnumerable<Bike>> GetBikes(Filter filter)
+        public async Task<IEnumerable<Bike>> GetBikes(BikeQuery queryObj)
         {
             var query = context.Bikes
               .Include(b => b.Model)
@@ -52,11 +52,23 @@ namespace Biker.Persistence
                 .ThenInclude(bf => bf.Feature)
               .AsQueryable();
 
-            if (filter.MakeId.HasValue)
-                query = query.Where(b => b.Model.MakeId == filter.MakeId.Value);
+            if (queryObj.MakeId.HasValue)
+                query = query.Where(b => b.Model.MakeId == queryObj.MakeId.Value);
 
-            //if (filter.ModelId.HasValue)
-            //    query = query.Where(b => b.ModelId == filter.ModelId.Value);
+            //if (queryObj.ModelId.HasValue)
+            //    query = query.Where(b => b.ModelId == queryObj.ModelId.Value);
+
+            if (queryObj.SortBy == "make")
+                query = (queryObj.IsSortAscending) ? query.OrderBy(b => b.Model.Make.Name) : query.OrderByDescending(b => b.Model.Make.Name);
+
+            if (queryObj.SortBy == "model")
+                query = (queryObj.IsSortAscending) ? query.OrderBy(b => b.Model.Name) : query.OrderByDescending(b => b.Model.Name);
+
+            if (queryObj.SortBy == "contactName")
+                query = (queryObj.IsSortAscending) ? query.OrderBy(b => b.Contact.Name) : query.OrderByDescending(b => b.Contact.Name);
+
+            if (queryObj.SortBy == "id")
+                query = (queryObj.IsSortAscending) ? query.OrderBy(b => b.Id) : query.OrderByDescending(b => b.Id);
 
             return await query.ToListAsync();
         }
