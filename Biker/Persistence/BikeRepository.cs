@@ -1,8 +1,10 @@
 ﻿using Biker.Core;
 using Biker.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Biker.Persistence
@@ -58,17 +60,18 @@ namespace Biker.Persistence
             //if (queryObj.ModelId.HasValue)
             //    query = query.Where(b => b.ModelId == queryObj.ModelId.Value);
 
-            if (queryObj.SortBy == "make")
-                query = (queryObj.IsSortAscending) ? query.OrderBy(b => b.Model.Make.Name) : query.OrderByDescending(b => b.Model.Make.Name);
+            var columnsMap = new Dictionary<string, Expression<Func<Bike, object>>>()
+            {
+                ["make"] = b => b.Model.Make.Name,
+                ["model"] = b => b.Model.Name,
+                ["contactName"] = b => b.Contact.Name,
+                ["id"] = b => b.Id
+            };
 
-            if (queryObj.SortBy == "model")
-                query = (queryObj.IsSortAscending) ? query.OrderBy(b => b.Model.Name) : query.OrderByDescending(b => b.Model.Name);
-
-            if (queryObj.SortBy == "contactName")
-                query = (queryObj.IsSortAscending) ? query.OrderBy(b => b.Contact.Name) : query.OrderByDescending(b => b.Contact.Name);
-
-            if (queryObj.SortBy == "id")
-                query = (queryObj.IsSortAscending) ? query.OrderBy(b => b.Id) : query.OrderByDescending(b => b.Id);
+            if (queryObj.IsSortAscending)
+                query = query.OrderBy(columnsMap[queryObj.SortBy]);
+            else
+                query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
 
             return await query.ToListAsync();
         }
