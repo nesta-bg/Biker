@@ -95,9 +95,10 @@ namespace Biker.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<BikeResource>> GetBikes()
+        public async Task<IEnumerable<BikeResource>> GetBikes(FilterResource filterResource)
         {
-            var bikes = await repository.GetBikes();
+            var filter = mapper.Map<FilterResource, Filter>(filterResource);
+            var bikes = await repository.GetBikes(filter);
 
             return mapper.Map<IEnumerable<Bike>, IEnumerable<BikeResource>>(bikes);
         }

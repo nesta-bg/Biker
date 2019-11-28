@@ -31,8 +31,19 @@ export class BikeService {
     return this._httpClient.get(this.myAppUrl + this.bikesEndpoint + '/' + id);
   }
 
-  getBikes() {
-    return this._httpClient.get<Bike[]>(this.myAppUrl + this.bikesEndpoint);
+  getBikes(filter) {
+    return this._httpClient.get<Bike[]>(this.myAppUrl + this.bikesEndpoint + '?' + this.toQueryString(filter));
+  }
+
+  toQueryString(obj) {
+    var parts = [];
+    for (var property in obj) {
+      var value = obj[property];
+      if (value != null && value != undefined)
+        parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
+    }
+
+    return parts.join('&');
   }
 
   update(bike: SaveBike) {

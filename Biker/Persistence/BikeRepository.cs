@@ -2,6 +2,7 @@
 using Biker.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Biker.Persistence
@@ -42,14 +43,22 @@ namespace Biker.Persistence
             context.Remove(bike);
         }
 
-        public async Task<IEnumerable<Bike>> GetBikes()
+        public async Task<IEnumerable<Bike>> GetBikes(Filter filter)
         {
-            return await context.Bikes
+            var query = context.Bikes
               .Include(b => b.Model)
                 .ThenInclude(m => m.Make)
               .Include(b => b.Features)
                 .ThenInclude(bf => bf.Feature)
-              .ToListAsync();
+              .AsQueryable();
+
+            if (filter.MakeId.HasValue)
+                query = query.Where(b => b.Model.MakeId == filter.MakeId.Value);
+
+            //if (filter.ModelId.HasValue)
+            //    query = query.Where(b => b.ModelId == filter.ModelId.Value);
+
+            return await query.ToListAsync();
         }
     }
 }

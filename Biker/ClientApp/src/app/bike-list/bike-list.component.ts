@@ -7,30 +7,27 @@ import { Bike, KeyValuePair } from '../models/bike';
 })
 export class BikeListComponent implements OnInit {
   bikes: Bike[];
-  allBikes: Bike[];
   makes: KeyValuePair[];
   filter: any = {};
 
   constructor(private bikeService: BikeService) { }
 
   ngOnInit() {
-    this.bikeService.getBikes()
-      .subscribe(bikes => this.bikes = this.allBikes = bikes);
-
     this.bikeService.getMakes()
       .subscribe(makes => this.makes = makes);
+
+    this.populateBikes();
+  }
+
+  private populateBikes() {
+    this.bikeService.getBikes(this.filter)
+      .subscribe(bikes => this.bikes = bikes);
   }
 
   onFilterChange() {
-    var bikes = this.allBikes;
+    //this.filter.modelId = 2;
 
-    if (this.filter.makeId)
-      bikes = bikes.filter(b => b.make.id == this.filter.makeId);
-
-    //if (this.filter.modelId)
-    //  bikes = bikes.filter(b => b.model.id == this.filter.modelId);
-
-    this.bikes = bikes;
+    this.populateBikes();
   }
 
   resetFilter() {
