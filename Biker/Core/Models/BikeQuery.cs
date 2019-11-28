@@ -1,6 +1,8 @@
-﻿namespace Biker.Core.Models
+﻿using Biker.Extensions;
+
+namespace Biker.Core.Models
 {
-    public class BikeQuery
+    public class BikeQuery : IQueryObject
     {
         public int? MakeId { get; set; }
 

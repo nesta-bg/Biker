@@ -1,5 +1,6 @@
 ﻿using Biker.Core;
 using Biker.Core.Models;
+using Biker.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -64,14 +65,10 @@ namespace Biker.Persistence
             {
                 ["make"] = b => b.Model.Make.Name,
                 ["model"] = b => b.Model.Name,
-                ["contactName"] = b => b.Contact.Name,
-                ["id"] = b => b.Id
+                ["contactName"] = b => b.Contact.Name
             };
 
-            if (queryObj.IsSortAscending)
-                query = query.OrderBy(columnsMap[queryObj.SortBy]);
-            else
-                query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
+            query = query.ApplyOrdering(queryObj, columnsMap);
 
             return await query.ToListAsync();
         }
