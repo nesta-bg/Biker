@@ -8,7 +8,7 @@ import { Bike, KeyValuePair } from '../models/bike';
 export class BikeListComponent implements OnInit {
   bikes: Bike[];
   makes: KeyValuePair[];
-  filter: any = {};
+  query: any = {};
 
   constructor(private bikeService: BikeService) { }
 
@@ -20,18 +20,28 @@ export class BikeListComponent implements OnInit {
   }
 
   private populateBikes() {
-    this.bikeService.getBikes(this.filter)
+    this.bikeService.getBikes(this.query)
       .subscribe(bikes => this.bikes = bikes);
   }
 
   onFilterChange() {
-    //this.filter.modelId = 2;
+    //this.query.modelId = 2;
 
     this.populateBikes();
   }
 
   resetFilter() {
-    this.filter = {};
+    this.query = {};
     this.onFilterChange();
+  }
+
+  sortBy(columnName) {
+    if (this.query.sortBy === columnName) {
+      this.query.isSortAscending = !this.query.isSortAscending;
+    } else {
+      this.query.sortBy = columnName;
+      this.query.isSortAscending = true;
+    }
+    this.populateBikes();
   }
 } 
