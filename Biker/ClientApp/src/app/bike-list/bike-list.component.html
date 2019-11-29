@@ -14,17 +14,20 @@
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
-      <th>Id</th>
-      <th (click)="sortBy('make')">
-        Make
-        <i *ngIf="query.sortBy === 'make'"
-           class="fa"
-           [class.fa-sort-asc]="query.isSortAscending"
-           [class.fa-sort-desc]="!query.isSortAscending"></i>
+      <th *ngFor="let c of columns">
+        <div *ngIf="c.isSortable; else isNotSortable">
+          <div (click)="sortBy(c.key)">
+            {{ c.title }}
+            <i *ngIf="query.sortBy === c.key"
+               class="fa"
+               [class.fa-sort-asc]="query.isSortAscending"
+               [class.fa-sort-desc]="!query.isSortAscending"></i>
+          </div>
+        </div>
+        <ng-template #isNotSortable>
+          {{ c.title }}
+        </ng-template>
       </th>
-      <th (click)="sortBy('model')">Model</th>
-      <th (click)="sortBy('contactName')">Contact Name</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
