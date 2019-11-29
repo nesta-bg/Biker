@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { BikeService } from '../services/bike.service';
-import { Bike, KeyValuePair } from '../models/bike';
+import { KeyValuePair } from '../models/bike';
 
 @Component({
   templateUrl: 'bike-list.component.html'
 })
 export class BikeListComponent implements OnInit {
-  bikes: Bike[];
+  private readonly PAGE_SIZE = 3; 
+  queryResult: any = {};
   makes: KeyValuePair[];
   query: any = {
-    pageSize: 3
+    pageSize: this.PAGE_SIZE
   };
   columns = [
     { title: 'Id' },
@@ -30,18 +31,22 @@ export class BikeListComponent implements OnInit {
 
   private populateBikes() {
     this.bikeService.getBikes(this.query)
-      .subscribe(bikes => this.bikes = bikes);
+      .subscribe(result => this.queryResult = result);
   }
 
   onFilterChange() {
     //this.query.modelId = 2;
 
+    this.query.page = 1; 
     this.populateBikes();
   }
 
   resetFilter() {
-    this.query = {};
-    this.onFilterChange();
+    this.query = {
+      page: 1,
+      pageSize: this.PAGE_SIZE
+    };
+    this.populateBikes();
   }
 
   sortBy(columnName) {

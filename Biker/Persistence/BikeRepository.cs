@@ -46,8 +46,10 @@ namespace Biker.Persistence
             context.Remove(bike);
         }
 
-        public async Task<IEnumerable<Bike>> GetBikes(BikeQuery queryObj)
+        public async Task<QueryResult<Bike>> GetBikes(BikeQuery queryObj)
         {
+            var result = new QueryResult<Bike>();
+
             var query = context.Bikes
               .Include(b => b.Model)
                 .ThenInclude(m => m.Make)
@@ -70,9 +72,13 @@ namespace Biker.Persistence
 
             query = query.ApplyOrdering(queryObj, columnsMap);
 
+            result.TotalItems = await query.CountAsync();
+
             query = query.ApplyPaging(queryObj);
 
-            return await query.ToListAsync();
+            result.Items = await query.ToListAsync();
+
+            return result;
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Biker.Core.Models;
 using System.Threading.Tasks;
-using Biker.Core.Models;
 
 namespace Biker.Core
 {
@@ -12,6 +11,6 @@ namespace Biker.Core
 
         void Remove(Bike bike);
 
-        Task<IEnumerable<Bike>> GetBikes(BikeQuery queryObj);
+        Task<QueryResult<Bike>> GetBikes(BikeQuery queryObj);
     }
 }
