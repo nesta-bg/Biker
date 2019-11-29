@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppErrorHandler } from './app.error-handler';
 import { BikeListComponent } from './bike-list/bike-list.component';
+import { PaginationComponent } from './shared/pagination.component';
 
 import * as Sentry from "@sentry/browser";
 
@@ -25,7 +26,8 @@ Sentry.init({
     NavMenuComponent,
     HomeComponent,
     BikeFormComponent,
-    BikeListComponent
+    BikeListComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

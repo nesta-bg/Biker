@@ -8,7 +8,9 @@ import { Bike, KeyValuePair } from '../models/bike';
 export class BikeListComponent implements OnInit {
   bikes: Bike[];
   makes: KeyValuePair[];
-  query: any = {};
+  query: any = {
+    pageSize: 3
+  };
   columns = [
     { title: 'Id' },
     { title: 'Contact Name', key: 'contactName', isSortable: true },
@@ -49,6 +51,11 @@ export class BikeListComponent implements OnInit {
       this.query.sortBy = columnName;
       this.query.isSortAscending = true;
     }
+    this.populateBikes();
+  }
+
+  onPageChange(page) {
+    this.query.page = page;
     this.populateBikes();
   }
 } 
