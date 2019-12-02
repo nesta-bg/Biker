@@ -15,6 +15,7 @@ import { BikeListComponent } from './bike-list/bike-list.component';
 import { PaginationComponent } from './shared/pagination.component';
 
 import * as Sentry from "@sentry/browser";
+import { ViewBikeComponent } from './view-bike/view-bike.component';
 
 Sentry.init({
   dsn: "https://9186aac887414930a5469ccd467b1217@sentry.io/1833261"
@@ -27,7 +28,8 @@ Sentry.init({
     HomeComponent,
     BikeFormComponent,
     BikeListComponent,
-    PaginationComponent
+    PaginationComponent,
+    ViewBikeComponent
   ],
   imports: [
     BrowserModule,

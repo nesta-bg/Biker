@@ -1,0 +1,44 @@
+<h1>Bike</h1>
+<div>
+  <ul class="nav nav-tabs mb-2">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#bike">Bike</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#photos">Photos</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div id="myTabContent" class="tab-content" *ngIf="bike">
+    <!-- Bike tab -->
+    <div class="tab-pane fade show active" id="bike">
+      <h2>Basics</h2>
+      <ul>
+        <li>Make: {{ bike.make.name }}</li>
+        <li>Model: {{ bike.model.name }}</li>
+        <li>Registered: {{ bike.isRegistered ? 'Yes' : 'No' }}
+      </ul>
+      <h2>Features</h2>
+      <ul>
+        <li *ngFor="let f of bike.features">{{ f.name }}</li>
+      </ul>
+      <h2>Contact</h2>
+      <ul>
+        <li>Contact Name: {{ bike.contact.name }}</li>
+        <li>Contact Phone: {{ bike.contact.phone }}</li>
+        <li>Contact Email: {{ bike.contact.email }}</li>
+      </ul>
+      <br />
+      <p>
+        <a class="btn btn-primary mr-2" [routerLink]="['/bikes/edit/', bike.id]">Edit</a>
+        <button class="btn btn-danger mr-2" (click)="delete()">Delete</button>
+        <a class="btn btn-secondary" routerLink='/bikes'>View All Bikes</a>
+      </p>
+    </div>
+    <!-- Photos tab -->
+    <div class="tab-pane fade" id="photos">
+      <h2>Photos</h2>
+    </div>
+  </div>
+</div>

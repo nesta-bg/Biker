@@ -36,7 +36,7 @@ export class BikeFormComponent implements OnInit {
     this.route.params
       .subscribe(p => {
         // + convert to number
-        this.bike.id = +p['id'];
+        this.bike.id = +p['id'] || 0;
       });
   }
 
@@ -92,28 +92,18 @@ export class BikeFormComponent implements OnInit {
   }
 
   submit() {
-    if (this.bike.id) {
-      this.bikeService.update(this.bike)
+    // $ in result$ - this is an observable
+    var result$ = (this.bike.id) ? this.bikeService.update(this.bike) : this.bikeService.create(this.bike); 
+
+    result$
         .subscribe(x => {
-          this.toastr.success('The bike was sucessfully updated.', 'Success', {
+          this.toastr.success('Data was sucessfully saved.', 'Success', {
             timeOut: 2000,
             closeButton: true,
             progressBar: true,
             progressAnimation: 'increasing'
           });
+          this.router.navigate(['/bikes/', this.bike.id])
         });
-    } else {
-      this.bikeService.create(this.bike)
-        .subscribe(x => console.log(x));
-    }
-  }
-
-  delete() {
-    if (confirm("Are you sure?")) {
-      this.bikeService.delete(this.bike.id)
-        .subscribe(x => {
-          this.router.navigate(['home']);
-        });
-    }
   }
 }
