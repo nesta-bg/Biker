@@ -22,9 +22,12 @@ namespace Biker.Core.Models
 
         public ICollection<BikeFeature> Features { get; set; }
 
+        public ICollection<Photo> Photos { get; set; }
+
         public Bike()
         {
             Features = new Collection<BikeFeature>();
+            Photos = new Collection<Photo>();
         }
     }
 }
