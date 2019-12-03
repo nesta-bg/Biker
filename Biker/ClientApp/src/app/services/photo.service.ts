@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +17,10 @@ export class PhotoService {
     var formData = new FormData();
     formData.append('file', photo);
     return this._httpClient.post(`${this.myAppUrl}api/bikes/${bikeId}/photos`, formData);
+  }
+
+  getPhotos(bikeId) {
+    return this._httpClient.get(`${this.myAppUrl}api/bikes/${bikeId}/photos`);
   }
 }
 

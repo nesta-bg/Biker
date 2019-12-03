@@ -10,6 +10,7 @@ export class ViewBikeComponent implements OnInit {
   bike: any;
   bikeId: number;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
+  photos: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +37,9 @@ export class ViewBikeComponent implements OnInit {
             return;
           }
         });
+
+    this.photoService.getPhotos(this.bikeId)
+      .subscribe(photos => this.photos = photos);
   }
 
   delete() {
@@ -51,6 +55,8 @@ export class ViewBikeComponent implements OnInit {
     var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
 
     this.photoService.upload(this.bikeId, nativeElement.files[0])
-      .subscribe(x => console.log(x));
+      .subscribe(photo => {
+        this.photos.push(photo);
+      });
   }
 } 

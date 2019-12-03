@@ -34,6 +34,8 @@ namespace Biker
 
             services.AddScoped<IBikeRepository, BikeRepository>();
 
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

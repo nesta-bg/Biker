@@ -9,5 +9,7 @@ namespace Biker.Core.Models
         [Required]
         [StringLength(255)]
         public string FileName { get; set; }
+
+        public int BikeId { get; set; }
     }
 }
