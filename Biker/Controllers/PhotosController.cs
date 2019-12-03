@@ -5,6 +5,7 @@ using Biker.Core.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.IO;
 using System.Linq;
@@ -15,24 +16,24 @@ namespace Biker.Controllers
     [Route("/api/bikes/{bikeId}/photos")]
     public class PhotosController : Controller
     {
-        private readonly int MAX_BYTES = 1 * 1024 * 1024;
-        private readonly string[] ACCEPTED_FILE_TYPES = new[] { ".jpg", ".jpeg", ".png" };
-
         private readonly IHostingEnvironment host;
         private readonly IBikeRepository repository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly PhotoSettings photoSettings;
 
         public PhotosController(
             IHostingEnvironment host,
             IBikeRepository repository,
             IUnitOfWork unitOfWork,
-            IMapper mapper)
+            IMapper mapper,
+            IOptionsSnapshot<PhotoSettings> options)
         {
             this.host = host;
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.photoSettings = options.Value;
         }
 
         //IFormCollection - upload multiple files
@@ -45,8 +46,8 @@ namespace Biker.Controllers
 
             if (file == null) return BadRequest("Null file");
             if (file.Length == 0) return BadRequest("Empty file");
-            if (file.Length > MAX_BYTES) return BadRequest("Max file size exceeded");
-            if (!ACCEPTED_FILE_TYPES.Any(s => s == Path.GetExtension(file.FileName))) return BadRequest("Invalid file type.");
+            if (file.Length > photoSettings.MaxBytes) return BadRequest("Max file size exceeded");
+            if (!photoSettings.IsSupported(file.FileName)) return BadRequest("Invalid file type.");
 
             var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
 
