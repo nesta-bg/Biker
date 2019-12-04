@@ -16,7 +16,12 @@ export class PhotoService {
   upload(bikeId, photo) {
     var formData = new FormData();
     formData.append('file', photo);
-    return this._httpClient.post(`${this.myAppUrl}api/bikes/${bikeId}/photos`, formData);
+    return this._httpClient.post(`${this.myAppUrl}api/bikes/${bikeId}/photos`, formData,
+      {
+        reportProgress: true,
+        observe: 'events'
+      }
+    );
   }
 
   getPhotos(bikeId) {

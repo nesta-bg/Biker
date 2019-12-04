@@ -11,7 +11,7 @@ export class ViewBikeComponent implements OnInit {
   bikeId: number;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   photos: any;
-
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -55,8 +55,7 @@ export class ViewBikeComponent implements OnInit {
     var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
 
     this.photoService.upload(this.bikeId, nativeElement.files[0])
-      .subscribe(photo => {
-        this.photos.push(photo);
-      });
+      .subscribe(events => 
+          console.log(events));
   }
-} 
+}
