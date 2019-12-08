@@ -2,6 +2,8 @@ import { BikeService } from '../services/bike.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PhotoService } from '../services/photo.service';
+import { HttpEventType } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   templateUrl: 'view-bike.component.html'
@@ -11,12 +13,15 @@ export class ViewBikeComponent implements OnInit {
   bikeId: number;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   photos: any;
-  
+  fileUploadProgress: string = '';
+  subscription;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private bikeService: BikeService,
-    private photoService: PhotoService) {
+    private photoService: PhotoService,
+    private toastr: ToastrService) {
 
     this.route.params.subscribe(p => {
       this.bikeId = +p['id'];
@@ -53,9 +58,27 @@ export class ViewBikeComponent implements OnInit {
 
   uploadPhoto() {
     var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+    var file = nativeElement.files[0];
+    nativeElement.value = '';
 
-    this.photoService.upload(this.bikeId, nativeElement.files[0])
-      .subscribe(events => 
-          console.log(events));
+    this.subscription = this.photoService.upload(this.bikeId, file)
+      .subscribe(events => {
+        if (events.type === HttpEventType.UploadProgress) {
+          this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+        } else if (events.type === HttpEventType.Response) {
+          this.fileUploadProgress = '';
+          this.photos.push(events.body);
+        }
+      }
+        , err => {
+          this.fileUploadProgress = '';
+          this.toastr.error(err, 'Error', {
+            timeOut: 2000,
+            closeButton: true,
+            progressBar: true,
+            progressAnimation: 'increasing'
+          });
+        }
+      );
   }
 }

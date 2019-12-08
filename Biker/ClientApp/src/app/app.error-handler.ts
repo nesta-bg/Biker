@@ -8,16 +8,16 @@ export class AppErrorHandler implements ErrorHandler {
   }
 
   handleError(error: any): void {
-    if (!isDevMode())
-      Sentry.captureException(error.originalError || error);
-    else
-      throw error;
-
     this.toastr.error('An unexpected error happened.', 'Error', {
       timeOut: 2000,
       closeButton: true,
       progressBar: true,
       progressAnimation: 'increasing'
     });
+
+    if (!isDevMode())
+      Sentry.captureException(error.originalError || error);
+    else
+      throw error;
   }
 }
