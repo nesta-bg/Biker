@@ -2,7 +2,6 @@
 using Biker.Controllers.Resources;
 using Biker.Core;
 using Biker.Core.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,6 @@ namespace Biker.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> CreateBike([FromBody] SaveBikeResource bikeResource)
         {
             if (!ModelState.IsValid)
@@ -48,7 +46,6 @@ namespace Biker.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
         public async Task<IActionResult> UpdateBike(int id, [FromBody] SaveBikeResource bikeResource)
         {
             if (!ModelState.IsValid)
@@ -71,7 +68,6 @@ namespace Biker.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> DeleteBike(int id)
         {
             var bike = await repository.GetBike(id, includeRelated: false);
