@@ -42,6 +42,8 @@ namespace Biker
 
             services.AddDbContext<BikerDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
+            services.AddDefaultIdentity<AppUser>().AddEntityFrameworkStores<BikerDbContext>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddCors(options =>
