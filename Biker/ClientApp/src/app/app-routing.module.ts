@@ -5,6 +5,8 @@ import { HomeComponent } from './home/home.component';
 import { BikeFormComponent } from './bike-form/bike-form.component';
 import { BikeListComponent } from './bike-list/bike-list.component';
 import { ViewBikeComponent } from './view-bike/view-bike.component';
+import { UserComponent } from './user/user.component';
+import { RegistrationComponent } from './user/registration/registration.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'bikes', pathMatch: 'full' },
@@ -13,7 +15,9 @@ const routes: Routes = [
   { path: 'bikes/edit/:id', component: BikeFormComponent },
   { path: 'bikes/:id', component: ViewBikeComponent },
   { path: 'bikes', component: BikeListComponent },
-  { path: '**', redirectTo: 'home' }
+  { path: 'user', component: UserComponent, children: [
+    {  path: 'registration', component: RegistrationComponent  }]  },
+  { path: '**', redirectTo: 'home'}
 ];
 
 @NgModule({
