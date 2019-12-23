@@ -9,7 +9,7 @@ import { NavMenuComponent } from './navmenu/navmenu.component';
 import { HomeComponent } from './home/home.component';
 import { BikeFormComponent } from './bike-form/bike-form.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppErrorHandler } from './app.error-handler';
 import { BikeListComponent } from './bike-list/bike-list.component';
 import { PaginationComponent } from './shared/pagination.component';
@@ -40,9 +40,14 @@ Sentry.init({
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      preventDuplicates: true
+      preventDuplicates: true,
+      timeOut: 2000,
+      closeButton: true,
+      progressBar: true,
+      progressAnimation: 'increasing'
     })
   ],
   providers: [

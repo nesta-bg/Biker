@@ -97,12 +97,7 @@ export class BikeFormComponent implements OnInit {
 
     result$
         .subscribe(x => {
-          this.toastr.success('Data was sucessfully saved.', 'Success', {
-            timeOut: 2000,
-            closeButton: true,
-            progressBar: true,
-            progressAnimation: 'increasing'
-          });
+          this.toastr.success('Data was sucessfully saved.', 'Success');
           this.router.navigate(['/bikes/', this.bike.id])
         });
   }
