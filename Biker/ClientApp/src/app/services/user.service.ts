@@ -22,4 +22,7 @@ export class UserService {
     return this.http.post(this.myAppUrl + 'api/AppUsers/Register', body);
   }
 
+  login(formData) {
+    return this.http.post(this.myAppUrl + 'api/AppUsers/Login', formData);
+  }
 }
