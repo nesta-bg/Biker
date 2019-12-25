@@ -17,11 +17,13 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li routerLinkActive="active" class="nav-item">
+      <li routerLinkActive="active" class="nav-item" *ngIf="!loggedIn; else logged">
         <a class="nav-link" routerLink='user'><i class="fa fa-user" aria-hidden="true"> Sign In / Up</i></a>
       </li>
       <li>
-        <a class="btn btn-danger" (click)="onLogout()" role="button">Sign Out</a>
+        <ng-template #logged>
+          <a class="btn btn-danger" (click)="onLogout()" role="button">Sign Out</a>
+        </ng-template>
       </li>
     </ul>
   </div>

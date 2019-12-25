@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../environments/environment';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private readonly myAppUrl: string;
-
-  constructor(private http: HttpClient) { 
+  isLoggedInSubject: Subject<boolean> = new Subject();
+  
+  constructor(private http: HttpClient) {
     this.myAppUrl = environment.appUrl;
   }
 
@@ -25,4 +27,12 @@ export class UserService {
   login(formData) {
     return this.http.post(this.myAppUrl + 'api/AppUsers/Login', formData);
   }
+
+   // public get isloggedIn(): boolean{
+  //   return localStorage.getItem('token') !==  null;
+  // }
+  isLoggedIn(val: boolean){
+    this.isLoggedInSubject.next(val);
+  }
+
 }

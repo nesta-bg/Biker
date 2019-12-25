@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   styles: []
 })
 export class LoginComponent implements OnInit {
-
+  
   formModel = {
     UserName: '',
     Password: ''
@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
     this.service.login(form.value).subscribe(
       (res: any) => {
         localStorage.setItem('token', res.token);
+        this.service.isLoggedIn(true);
         this.router.navigateByUrl('/home');
       },
       err => {
@@ -35,6 +36,5 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
 
 }
