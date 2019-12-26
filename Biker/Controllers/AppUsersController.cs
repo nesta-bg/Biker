@@ -40,7 +40,8 @@ namespace Biker.Controllers
         [Route("Register")]
         public async Task<Object> Register([FromBody]AppUserResource model)
         {
-            model.Role = "Customer";
+            //model.Role = "Customer";
+            model.Role = "Admin";
 
             var appUser = this.mapper.Map<AppUserResource, AppUser>(model);
 
@@ -63,11 +64,16 @@ namespace Biker.Controllers
             var user = await this.userManager.FindByNameAsync(model.UserName);
             if (user != null && await this.userManager.CheckPasswordAsync(user, model.Password))
             {
+                //Get role assigned to the user
+                var role = await this.userManager.GetRolesAsync(user);
+                IdentityOptions _options = new IdentityOptions();
+
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim("UserID",user.Id.ToString())
+                        new Claim("UserID",user.Id.ToString()),
+                        new Claim(_options.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
                     }),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.authSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
@@ -83,7 +89,7 @@ namespace Biker.Controllers
 
         [HttpGet]
         [Route("UserProfile")]
-        [Authorize]
+        [Authorize(Roles = "Admin, Customer")]
         public async Task<Object> GetUserProfile()
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
