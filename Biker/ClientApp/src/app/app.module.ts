@@ -8,7 +8,7 @@ import { AppComponent } from './app/app.component';
 import { NavMenuComponent } from './navmenu/navmenu.component';
 import { HomeComponent } from './home/home.component';
 import { BikeFormComponent } from './bike-form/bike-form.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppErrorHandler } from './app.error-handler';
 import { BikeListComponent } from './bike-list/bike-list.component';
@@ -20,6 +20,8 @@ import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { LoginComponent } from './user/login/login.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { UserService } from './services/user.service';
 
 Sentry.init({
   dsn: "https://9186aac887414930a5469ccd467b1217@sentry.io/1833261"
@@ -55,7 +57,12 @@ Sentry.init({
     })
   ],
   providers: [
-    { provide: ErrorHandler, useClass: AppErrorHandler }
+    { provide: ErrorHandler, useClass: AppErrorHandler },
+    UserService, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
