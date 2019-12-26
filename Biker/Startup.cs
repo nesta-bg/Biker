@@ -48,7 +48,9 @@ namespace Biker
 
             services.AddDbContext<BikerDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
-            services.AddDefaultIdentity<AppUser>().AddEntityFrameworkStores<BikerDbContext>();
+            services.AddDefaultIdentity<AppUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<BikerDbContext>();
 
             services.Configure<IdentityOptions>(options => {
                 //options.Password.RequireDigit = false;
