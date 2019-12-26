@@ -10,6 +10,8 @@ using System.Security.Claims;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Biker.Controllers
 {
@@ -74,6 +76,17 @@ namespace Biker.Controllers
             }
             else
                 return BadRequest(new { message = "Username or password is incorrect." });
+        }
+
+        [HttpGet]
+        [Route("UserProfile")]
+        [Authorize]
+        public async Task<Object> GetUserProfile()
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await this.userManager.FindByIdAsync(userId);
+            
+            return this.mapper.Map<AppUser, AppUserResource>(user);
         }
     }
 }

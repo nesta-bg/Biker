@@ -19,6 +19,7 @@ import { ViewBikeComponent } from './view-bike/view-bike.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { LoginComponent } from './user/login/login.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 Sentry.init({
   dsn: "https://9186aac887414930a5469ccd467b1217@sentry.io/1833261"
@@ -35,7 +36,8 @@ Sentry.init({
     ViewBikeComponent,
     UserComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,7 @@ import { ViewBikeComponent } from './view-bike/view-bike.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { LoginComponent } from './user/login/login.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'bikes', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'user', component: UserComponent, children: [
     {  path: 'registration', component: RegistrationComponent  },
     {  path: 'login', component: LoginComponent  },]  },
+  { path:'user-profile', component: UserProfileComponent },
   { path: '**', redirectTo: 'home'}
 ];
 

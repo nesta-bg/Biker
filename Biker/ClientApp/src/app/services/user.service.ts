@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
 
@@ -33,6 +33,11 @@ export class UserService {
   // }
   isLoggedIn(val: boolean){
     this.isLoggedInSubject.next(val);
+  }
+
+  getUserProfile() {
+    var tokenHeader = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('token') });
+    return this.http.get(this.myAppUrl + 'api/AppUsers/UserProfile', {headers: tokenHeader});
   }
 
 }
