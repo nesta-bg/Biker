@@ -22,6 +22,8 @@ import { LoginComponent } from './user/login/login.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { UserService } from './services/user.service';
+import { AdminComponent } from './admin/admin.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 Sentry.init({
   dsn: "https://9186aac887414930a5469ccd467b1217@sentry.io/1833261"
@@ -39,7 +41,9 @@ Sentry.init({
     UserComponent,
     RegistrationComponent,
     LoginComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    AdminComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,
