@@ -24,7 +24,7 @@ const routes: Routes = [
     {  path: 'registration', component: RegistrationComponent  },
     {  path: 'login', component: LoginComponent  },]  },
   { path:'user-profile', component: UserProfileComponent, canActivate:[AuthGuard] },
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate:[AuthGuard], data:{permittedRoles:['Admin']} },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: '**', redirectTo: 'home'}
 ];

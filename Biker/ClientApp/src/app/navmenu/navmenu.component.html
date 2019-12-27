@@ -17,6 +17,9 @@
       <li routerLinkActive="active" class="nav-item">
         <a class="nav-link" routerLink='bikes/new'><i class="fa fa-plus" aria-hidden="true"> New Bike</i></a>
       </li>
+      <li routerLinkActive="active" class="nav-item">
+        <a class="nav-link" routerLink='admin'><i class="fa fa-lock" aria-hidden="true"> Admin</i></a>
+      </li>
     </ul>
     <ul class="navbar-nav ml-auto">
       <li routerLinkActive="active" class="nav-item" *ngIf="!loggedIn; else logged">

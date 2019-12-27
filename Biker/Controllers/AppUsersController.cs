@@ -40,8 +40,8 @@ namespace Biker.Controllers
         [Route("Register")]
         public async Task<Object> Register([FromBody]AppUserResource model)
         {
-            //model.Role = "Customer";
-            model.Role = "Admin";
+            model.Role = "Customer";
+            //model.Role = "Admin";
 
             var appUser = this.mapper.Map<AppUserResource, AppUser>(model);
 
