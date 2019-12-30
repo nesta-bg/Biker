@@ -28,9 +28,10 @@ export class UserService {
     return this.http.post(this.myAppUrl + 'api/AppUsers/Login', formData);
   }
 
-   // public get isloggedIn(): boolean{
-  //   return localStorage.getItem('token') !==  null;
-  // }
+  public get isloggedIn(): boolean{
+    return localStorage.getItem('token') !==  null;
+  }
+
   isLoggedIn(val: boolean){
     this.isLoggedInSubject.next(val);
   }
@@ -39,10 +40,14 @@ export class UserService {
     return this.http.get(this.myAppUrl + 'api/AppUsers/UserProfile');
   }
 
+  getUserRole() {
+    var payLoad = JSON.parse(window.atob(localStorage.getItem('token').split('.')[1]));
+    return payLoad.role;
+  }
+
   roleMatch(allowedRoles): boolean {
     var isMatch = false;
-    var payLoad = JSON.parse(window.atob(localStorage.getItem('token').split('.')[1]));
-    var userRole = payLoad.role;
+    var userRole = this.getUserRole();
     allowedRoles.forEach(element => {
       if (userRole == element) {
         isMatch = true;

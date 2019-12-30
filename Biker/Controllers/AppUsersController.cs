@@ -94,8 +94,15 @@ namespace Biker.Controllers
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await this.userManager.FindByIdAsync(userId);
-            
-            return this.mapper.Map<AppUser, AppUserResource>(user);
+
+            var role = await this.userManager.GetRolesAsync(user);
+
+            var userResource = new AppUserResource
+            {
+                Role = role[0]
+            };
+
+            return this.mapper.Map<AppUser, AppUserResource>(user, userResource);
         }
     }
 }

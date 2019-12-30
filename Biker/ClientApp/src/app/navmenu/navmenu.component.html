@@ -17,7 +17,7 @@
       <li routerLinkActive="active" class="nav-item">
         <a class="nav-link" routerLink='bikes/new'><i class="fa fa-plus" aria-hidden="true"> New Bike</i></a>
       </li>
-      <li routerLinkActive="active" class="nav-item">
+      <li routerLinkActive="active" class="nav-item" *ngIf="userRole === 'Admin'">
         <a class="nav-link" routerLink='admin'><i class="fa fa-lock" aria-hidden="true"> Admin</i></a>
       </li>
     </ul>
