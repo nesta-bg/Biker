@@ -24,6 +24,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { UserService } from './services/user.service';
 import { AdminComponent } from './admin/admin.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { ChartsModule } from 'ng2-charts';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 Sentry.init({
   dsn: "https://9186aac887414930a5469ccd467b1217@sentry.io/1833261"
@@ -43,7 +45,8 @@ Sentry.init({
     LoginComponent,
     UserProfileComponent,
     AdminComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    PieChartComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ Sentry.init({
       closeButton: true,
       progressBar: true,
       progressAnimation: 'increasing'
-    })
+    }),
+    ChartsModule
   ],
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler },
