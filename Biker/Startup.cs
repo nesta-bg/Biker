@@ -44,6 +44,8 @@ namespace Biker
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddTransient<IPhotoService, PhotoService>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<BikerDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
