@@ -1,4 +1,5 @@
 ﻿using Biker.Core.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Biker.Core
@@ -12,5 +13,7 @@ namespace Biker.Core
         void Remove(Bike bike);
 
         Task<QueryResult<Bike>> GetBikes(BikeQuery queryObj);
+
+        Task<IEnumerable<PieChart>> GetBikesGroupedByMake();
     }
 }

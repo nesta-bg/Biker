@@ -106,5 +106,14 @@ namespace Biker.Controllers
 
             return mapper.Map<QueryResult<Bike>, QueryResultResource<BikeResource>>(queryResult);
         }
+
+        [HttpGet]
+        [Route("GroupByMake")]
+        public async Task<IEnumerable<PieChartResource>> GetBikesGroupedByMake()
+        {
+            var bikes = await repository.GetBikesGroupedByMake();
+
+            return mapper.Map<IEnumerable<PieChart>, IEnumerable<PieChartResource>>(bikes);
+        }
     }
 }

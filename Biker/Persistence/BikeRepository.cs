@@ -80,5 +80,13 @@ namespace Biker.Persistence
 
             return result;
         }
+
+        public async Task<IEnumerable<PieChart>> GetBikesGroupedByMake()
+        {
+            return await context.Bikes
+                .GroupBy(b => b.Model.Make.Name, b => b.Id, (key, val) =>
+                    new PieChart { MakeName = key, Items = val.Count() })
+                .ToListAsync();
+        }
     }
 }

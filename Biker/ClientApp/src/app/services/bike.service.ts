@@ -53,6 +53,10 @@ export class BikeService {
   delete(id) {
     return this._httpClient.delete(this.myAppUrl + this.bikesEndpoint + '/' + id);
   }
+
+  getBikesGroupedByMake() {
+    return this._httpClient.get(this.myAppUrl + this.bikesEndpoint + '/' + 'GroupByMake');
+  }
 }
 
 

@@ -11,6 +11,7 @@ namespace Biker.Mapping
         public MappingProfile()
         {
             // From Domain to API Resource
+            CreateMap<PieChart, PieChartResource>();
             CreateMap<AppUser, AppUserResource>();
             CreateMap<Photo, PhotoResource>();
             CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
