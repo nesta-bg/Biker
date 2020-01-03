@@ -46,6 +46,10 @@ namespace Biker
 
             services.AddTransient<IPhotoService, PhotoService>();
 
+            //If Development = FileSystemPhotoStorage;
+            //If Production = AzurePhotoStorage;
+            services.AddTransient<IPhotoStorage, FileSystemPhotoStorage>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<BikerDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
