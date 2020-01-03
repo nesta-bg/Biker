@@ -53,15 +53,9 @@ namespace Biker.Persistence
             var query = context.Bikes
               .Include(b => b.Model)
                 .ThenInclude(m => m.Make)
-              .Include(b => b.Features)
-                .ThenInclude(bf => bf.Feature)
               .AsQueryable();
 
-            if (queryObj.MakeId.HasValue)
-                query = query.Where(b => b.Model.MakeId == queryObj.MakeId.Value);
-
-            //if (queryObj.ModelId.HasValue)
-            //    query = query.Where(b => b.ModelId == queryObj.ModelId.Value);
+            query = query.ApplyFiltering(queryObj);
 
             var columnsMap = new Dictionary<string, Expression<Func<Bike, object>>>()
             {
@@ -69,7 +63,6 @@ namespace Biker.Persistence
                 ["model"] = b => b.Model.Name,
                 ["contactName"] = b => b.Contact.Name
             };
-
             query = query.ApplyOrdering(queryObj, columnsMap);
 
             result.TotalItems = await query.CountAsync();

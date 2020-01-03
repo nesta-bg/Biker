@@ -6,7 +6,7 @@ import { KeyValuePair } from '../models/bike';
   templateUrl: 'bike-list.component.html'
 })
 export class BikeListComponent implements OnInit {
-  private readonly PAGE_SIZE = 3; 
+  private readonly PAGE_SIZE = 6; 
   queryResult: any = {};
   makes: KeyValuePair[];
   query: any = {

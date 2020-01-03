@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biker.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -27,6 +28,17 @@ namespace Biker.Extensions
                 queryObj.PageSize = 10;
 
             return query.Skip((queryObj.Page - 1) * queryObj.PageSize).Take(queryObj.PageSize);
+        }
+
+        public static IQueryable<Bike> ApplyFiltering(this IQueryable<Bike> query, BikeQuery queryObj)
+        {
+            if (queryObj.MakeId.HasValue)
+                query = query.Where(v => v.Model.MakeId == queryObj.MakeId.Value);
+
+            if (queryObj.ModelId.HasValue)
+                query = query.Where(v => v.ModelId == queryObj.ModelId.Value);
+
+            return query;
         }
     }
 }
