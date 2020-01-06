@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BikeService } from '../services/bike.service';
 import { KeyValuePair } from '../models/bike';
+import { UserService } from '../services/user.service';
 
 @Component({
   templateUrl: 'bike-list.component.html'
@@ -19,10 +20,13 @@ export class BikeListComponent implements OnInit {
     { title: 'Model', key: 'model', isSortable: true },
     {}
   ];
+  loggedIn;
 
-  constructor(private bikeService: BikeService) { }
+  constructor(private bikeService: BikeService, private userService: UserService) { }
 
   ngOnInit() {
+    this.loggedIn = this.userService.isloggedIn;
+
     this.bikeService.getMakes()
       .subscribe(makes => this.makes = makes);
 

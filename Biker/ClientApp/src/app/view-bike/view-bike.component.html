@@ -31,15 +31,15 @@
       </ul>
       <br />
       <p>
-        <a class="btn btn-primary mr-2" [routerLink]="['/bikes/edit/', bike.id]">Edit</a>
-        <button class="btn btn-danger mr-2" (click)="delete()">Delete</button>
+        <a *ngIf="loggedIn" class="btn btn-primary mr-2" [routerLink]="['/bikes/edit/', bike.id]">Edit</a>
+        <button *ngIf="loggedIn" class="btn btn-danger mr-2" (click)="delete()">Delete</button>
         <a class="btn btn-secondary" routerLink='/bikes'>View All Bikes</a>
       </p>
     </div>
     <!-- Photos tab -->
     <div class="tab-pane fade" id="photos">
       <h2>Photos</h2>
-      <input class="mb-2" type="file" (change)="uploadPhoto()" #fileInput>
+      <input *ngIf="loggedIn" class="mb-2" type="file" (change)="uploadPhoto()" #fileInput>
       <div *ngIf="fileUploadProgress">
         Upload progress: {{ fileUploadProgress }} Complete
         <div class="progress">

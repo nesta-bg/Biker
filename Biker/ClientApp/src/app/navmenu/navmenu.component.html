@@ -14,7 +14,7 @@
       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
         <a class="nav-link" routerLink='bikes'><i class="fa fa-motorcycle" aria-hidden="true"> Bikes</i></a>
       </li>
-      <li routerLinkActive="active" class="nav-item">
+      <li routerLinkActive="active" class="nav-item" *ngIf="loggedIn">
         <a class="nav-link" routerLink='bikes/new'><i class="fa fa-plus" aria-hidden="true"> New Bike</i></a>
       </li>
       <li routerLinkActive="active" class="nav-item" *ngIf="userRole === 'Admin'">

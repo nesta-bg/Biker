@@ -16,8 +16,8 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 const routes: Routes = [
   { path: '', redirectTo: 'bikes', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'bikes/new', component: BikeFormComponent },
-  { path: 'bikes/edit/:id', component: BikeFormComponent },
+  { path: 'bikes/new', component: BikeFormComponent, canActivate:[AuthGuard] },
+  { path: 'bikes/edit/:id', component: BikeFormComponent, canActivate:[AuthGuard] },
   { path: 'bikes/:id', component: ViewBikeComponent },
   { path: 'bikes', component: BikeListComponent },
   { path: 'user', component: UserComponent, children: [

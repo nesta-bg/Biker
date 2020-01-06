@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PhotoService } from '../services/photo.service';
 import { HttpEventType } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../services/user.service';
 
 @Component({
   templateUrl: 'view-bike.component.html'
@@ -15,13 +16,15 @@ export class ViewBikeComponent implements OnInit {
   photos: any;
   fileUploadProgress: string = '';
   subscription;
+  loggedIn;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private bikeService: BikeService,
     private photoService: PhotoService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private userService: UserService) {
 
     this.route.params.subscribe(p => {
       this.bikeId = +p['id'];
@@ -33,6 +36,8 @@ export class ViewBikeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loggedIn = this.userService.isloggedIn;
+
     this.bikeService.getBike(this.bikeId)
       .subscribe(
         b => this.bike = b,
