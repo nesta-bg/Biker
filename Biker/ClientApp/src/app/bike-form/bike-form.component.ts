@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./bike-form.component.css']
 })
 export class BikeFormComponent implements OnInit {
+  title: string = 'New Bike';
   makes: any;
   models: any;
   features: any;
@@ -18,7 +19,7 @@ export class BikeFormComponent implements OnInit {
     id: 0,
     makeId: 0,
     modelId: 0,
-    isRegistered: false,
+    isRegistered: null,
     features: [],
     contact: {
       name: '',
@@ -46,8 +47,10 @@ export class BikeFormComponent implements OnInit {
       this.bikeService.getFeatures()
     ];
 
-    if (this.bike.id)
+    if (this.bike.id) {
       sources.push(this.bikeService.getBike(this.bike.id));
+      this.title = 'Edit Bike';
+    }
 
     forkJoin(sources)
       .subscribe(data => {
